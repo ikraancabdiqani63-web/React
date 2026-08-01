@@ -1,27 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { VisaApplication } from "../../../types/visa";
 
-interface VisaState {
-  applications: VisaApplication[];
+
+interface VisaSFormData {
+  FullName: string;
+  Passport: string;
+  Country: string;
+  VisaType: string;
 }
 
-const initialState: VisaState = {
-  applications: [],
+const initialState: VisaSFormData = {
+  FullName: "",
+  Passport: "",
+  Country: "",
+  VisaType: "",
 };
 
 const visaSlice = createSlice({
   name: "visa",
   initialState,
   reducers: {
-    addApplication: (state, action: PayloadAction<VisaApplication>) => {
-      state.applications.push(action.payload);
+    addApplication: (state, action: PayloadAction<Partial<VisaSFormData>>) => {
+      return { ...state, ...action.payload };
     },
 
-    deleteApplication: (state, action: PayloadAction<number>) => {
-      state.applications = state.applications.filter(
-        (app) => app.id !== action.payload,
-      );
+    deleteApplication: () => {
+      return initialState;
     },
   },
 });

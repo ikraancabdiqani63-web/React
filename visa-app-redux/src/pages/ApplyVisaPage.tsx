@@ -1,60 +1,60 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch, useSelector } from "react-redux";
+import { addApplication } from "../redux/features/visa/visaSlice";
+import type { RootState } from "../redux/store";
 function ApplyVisaPage() {
+  const form = useSelector((state: RootState) => state.visa);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [fullName, setFullName] = useState("");
-  const [passport, setPassport] = useState("");
-  const [country, setCountry] = useState("");
-  const [visaType, setVisaType] = useState("");
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    console.log("Changed:", e.target.name, e.target.value);
 
+    dispatch(addApplication({ [e.target.name]: e.target.value }));
+  };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    navigate("/review", {
-      state: {
-        fullName,
-        passport,
-        country,
-        visaType,
-      },
-    });
+    navigate("/review");
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 bg-white shadow-lg p-6 rounded-lg">
-      <h2 className="text-3xl font-bold mb-6">Visa Application</h2>
-
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
+      <h1 className="text-2xl font-bold mb-6">Apply for a Visa</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"
+          name="FullName"
           placeholder="Full Name"
           className="w-full border p-3 rounded"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
+          value={form.FullName}
+          onChange={handleChange}
         />
 
         <input
           type="text"
+          name="Passport"
           placeholder="Passport Number"
           className="w-full border p-3 rounded"
-          value={passport}
-          onChange={(e) => setPassport(e.target.value)}
+          value={form.Passport}
+          onChange={handleChange}
         />
 
         <input
           type="text"
+          name="Country"
           placeholder="Destination Country"
           className="w-full border p-3 rounded"
-          value={country}
-          onChange={(e) => setCountry(e.target.value)}
+          value={form.Country}
+          onChange={handleChange}
         />
 
         <select
+          name="VisaType"
           className="w-full border p-3 rounded"
-          value={visaType}
-          onChange={(e) => setVisaType(e.target.value)}
+          value={form.VisaType}
+          onChange={handleChange}
         >
           <option value="">Select Visa Type</option>
           <option value="Tourist">Tourist</option>

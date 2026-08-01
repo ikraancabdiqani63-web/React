@@ -1,24 +1,29 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import type { RootState } from "../redux/store";
 
 function ReviewPage() {
-  const { state } = useLocation();
   const navigate = useNavigate();
+  const form = useSelector((state: RootState) => state.visa);
 
   return (
     <div className="max-w-xl mx-auto mt-10 bg-white shadow-lg p-6 rounded-lg">
       <h2 className="text-3xl font-bold mb-6">Review Your Application</h2>
 
       <p>
-        <strong>Name:</strong> {state.fullName}
+        <strong>Name:</strong> {form.FullName}
       </p>
+
       <p>
-        <strong>Passport:</strong> {state.passport}
+        <strong>Passport:</strong> {form.Passport}
       </p>
+
       <p>
-        <strong>Country:</strong> {state.country}
+        <strong>Country:</strong> {form.Country}
       </p>
+
       <p>
-        <strong>Visa Type:</strong> {state.visaType}
+        <strong>Visa Type:</strong> {form.VisaType}
       </p>
 
       <button

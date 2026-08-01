@@ -15,8 +15,10 @@ function HomePage() {
         to="/apply"
         className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
       >
-        Apply Now
+        Apply visa
       </Link>
+      <br />
+      
     </div>
   );
 }
